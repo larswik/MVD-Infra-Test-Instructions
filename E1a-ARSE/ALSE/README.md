@@ -1,6 +1,6 @@
 ## Summary
 
-This is the test instruction for TC 1a1 Alignment Infra specific things: super elevation.
+This is the test instruction for IFC4x3_AbRV-E1a-ALSE - Alignment Superelevation & Width.
 
 The test instruction includes:
 
@@ -54,9 +54,16 @@ The Following occurence variations need to be checked and certified in relation 
 ## Usages
 The following itemised restrictions and constraints shall be placed on IFC Entities & Concept Templates:
 
-- IfcSomething
-    - *Constraint*
+- IfcAnnotation/SUPERELEVATIONEVENT
+    - *Each superelevation event shall have a linear placement relative to the alignment curve*
+    - *Each superelevation event shall have one instance of Pset_Superelevation attached*
+    - *Each instance of Pset_Superelevation shall have values for properties Side, Superelevation and TransitionSuperelevation*
 
+IfcAnnotation/WIDTHEVENT
+
+- *Each width event shall have a linear placement relative to the alignment curve*
+- *Each width event shall have one instance of Pset_Width attached*
+- *Each instance of Pset_Superelevation shall have values for properties Side, NominalWidth and TransitionWidth*
 
 The Test case requires the following additional checks related to Model Geometry:
 
@@ -65,6 +72,34 @@ The Test case requires the following additional checks related to Model Geometry
 
 ## Model Dataset
 This test case utilises the attached dataset documented by the following drawings and data schedule. 
+
+Synopsis:
+
+- IfcProject
+
+  - IfcGeometricRepresentationContext
+
+    - IfcMapConversion
+      - IfcProjectedCRS
+
+  - IfcSite
+
+    - IfcAlignment
+      - Should have straights, clothoid/circular arc to the left and to the right
+      - Vertical is not really needed but is probably part of the included E1-ALRF
+
+    - IfcRoad
+      - IfcFacilityPart/ROADSEGMENT
+        - IfcFacilityPart/CARRIAGEWAY
+          - IfcAnnotation/SUPERELEVATIONEVENT (one for every start of alignment element)
+            - Pset_Superelevation (left side)
+            - IfcLinearPlacement
+          - IfcAnnotation/SUPERELEVATIONEVENT (one for every start of alignment element)
+            - Pset_Superelevation (right side)
+            - IfcLinearPlacement
+          - IfcAnnotation/WIDTHEVENT (one at start, add a narrowing of the road somewhere along the alignment)
+            - Pset_Width (both)
+            - IfcLinearPlacement
 
 *This is a later step tha involved the detailed documentation of the certification dataset (model)*
 
